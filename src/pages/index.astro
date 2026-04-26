@@ -1,0 +1,90 @@
+---
+import { getCollection } from 'astro:content';
+import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import FormattedDate from '../components/FormattedDate.astro';
+import Header from '../components/Header.astro';
+import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
+
+const posts = (await getCollection('blog'))
+	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+	.slice(0, 5);
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+		<style>
+			.intro {
+				margin-bottom: 3em;
+			}
+			.intro p {
+				font-size: 1.1em;
+				line-height: 1.6;
+			}
+			.recent {
+				margin-top: 2em;
+			}
+			.recent h2 {
+				margin-bottom: 1em;
+			}
+			.post-list {
+				list-style: none;
+				padding: 0;
+			}
+			.post-list li {
+				margin-bottom: 1.5em;
+			}
+			.post-list a {
+				text-decoration: none;
+				color: rgb(var(--black));
+			}
+			.post-list a:hover .post-title {
+				color: rgb(var(--accent));
+			}
+			.post-title {
+				margin: 0 0 0.25em 0;
+				font-size: 1.25em;
+			}
+			.post-date {
+				color: rgb(var(--gray));
+				font-size: 0.9em;
+			}
+		</style>
+	</head>
+	<body>
+		<Header />
+		<main>
+			<section class="intro">
+				<h1>{SITE_TITLE}</h1>
+				<p>{SITE_DESCRIPTION}</p>
+				<p>
+					This is a working notebook on alignment, governance, and the social impact of AI
+					systems — written for anyone who wants to think carefully about where this
+					technology is taking us.
+				</p>
+			</section>
+
+			<section class="recent">
+				<h2>Recent posts</h2>
+				<ul class="post-list">
+					{
+						posts.map((post) => (
+							<li>
+								<a href={`/blog/${post.id}/`}>
+									<h3 class="post-title">{post.data.title}</h3>
+									<p class="post-date">
+										<FormattedDate date={post.data.pubDate} />
+									</p>
+								</a>
+							</li>
+						))
+					}
+				</ul>
+				<p><a href="/blog">All posts &rarr;</a></p>
+			</section>
+		</main>
+		<Footer />
+	</body>
+</html>

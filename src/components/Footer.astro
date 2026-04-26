@@ -1,0 +1,23 @@
+---
+import { SITE_AUTHOR } from '../consts';
+const today = new Date();
+---
+
+<footer>
+	&copy; {today.getFullYear()} {SITE_AUTHOR}.
+	<a href="/rss.xml">RSS</a>
+</footer>
+<style>
+	footer {
+		padding: 2em 1em 6em 1em;
+		background: linear-gradient(var(--gray-gradient)) no-repeat;
+		color: rgb(var(--gray));
+		text-align: center;
+	}
+	footer a {
+		color: rgb(var(--gray));
+	}
+	footer a:hover {
+		color: rgb(var(--gray-dark));
+	}
+</style>

@@ -1,0 +1,72 @@
+---
+import { getCollection } from 'astro:content';
+import BaseHead from '../../components/BaseHead.astro';
+import Footer from '../../components/Footer.astro';
+import Header from '../../components/Header.astro';
+import { SITE_TITLE } from '../../consts';
+
+const posts = (await getCollection('blog')).filter((p) => !p.data.draft);
+
+const tagCounts = new Map<string, number>();
+for (const post of posts) {
+	for (const tag of post.data.tags) {
+		tagCounts.set(tag, (tagCounts.get(tag) ?? 0) + 1);
+	}
+}
+
+const tags = [...tagCounts.entries()].sort((a, b) => a[0].localeCompare(b[0]));
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead title={`Tags · ${SITE_TITLE}`} description="Browse posts by tag." />
+		<style>
+			.tag-list {
+				list-style: none;
+				padding: 0;
+				display: flex;
+				flex-wrap: wrap;
+				gap: 0.75em;
+			}
+			.tag-list a {
+				display: inline-block;
+				padding: 0.4em 0.8em;
+				background: rgb(var(--gray-light));
+				border-radius: 999px;
+				text-decoration: none;
+				color: rgb(var(--black));
+			}
+			.tag-list a:hover {
+				color: rgb(var(--accent));
+			}
+			.count {
+				color: rgb(var(--gray));
+				font-size: 0.9em;
+				margin-left: 0.25em;
+			}
+		</style>
+	</head>
+	<body>
+		<Header />
+		<main>
+			<h1>Tags</h1>
+			{tags.length === 0 ? (
+				<p>No tags yet.</p>
+			) : (
+				<ul class="tag-list">
+					{
+						tags.map(([tag, count]) => (
+							<li>
+								<a href={`/tags/${tag}/`}>
+									#{tag}<span class="count">({count})</span>
+								</a>
+							</li>
+						))
+					}
+				</ul>
+			)}
+		</main>
+		<Footer />
+	</body>
+</html>
