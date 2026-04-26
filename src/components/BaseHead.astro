@@ -2,6 +2,7 @@
 import '../styles/global.css';
 import { SITE_TITLE } from '../consts';
 import { Font } from 'astro:assets';
+import Analytics from '@vercel/analytics/astro';
 
 interface Props {
 	title: string;
@@ -55,7 +56,4 @@ const ogImageURL = new URL(ogImagePath, Astro.site ?? Astro.url).toString();
 <meta property="twitter:description" content={description} />
 <meta property="twitter:image" content={ogImageURL} />
 
-<script>
-	import { inject } from '@vercel/analytics';
-	inject();
-</script>
+<Analytics />
