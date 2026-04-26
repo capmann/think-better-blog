@@ -7,9 +7,9 @@ tags: ['meta']
 
 Hello, and welcome.
 
-This is a working notebook on AI ethics and safety — a place to think out loud about
-alignment, governance, the labor and distributional effects of these systems, and the
-ways the public conversation about risk does and doesn't track reality.
+This is a working notebook for thinking better about AI — alignment, governance, the
+labor and distributional effects of these systems, and the ways the public conversation
+about risk does and doesn't track reality.
 
 I'm not trying to be a news site. I'm trying to write the kind of posts I wish I could
 read: careful, opinionated, willing to be wrong in public.
