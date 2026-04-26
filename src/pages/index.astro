@@ -19,74 +19,112 @@ const posts = (await getCollection('blog'))
 		<style>
 			.hero {
 				margin-bottom: 4em;
+				position: relative;
+			}
+			.hero::before {
+				content: '';
+				position: absolute;
+				top: -2em;
+				left: -2em;
+				width: 280px;
+				height: 280px;
+				background: var(--accent-gradient);
+				opacity: 0.07;
+				filter: blur(80px);
+				border-radius: 50%;
+				z-index: -1;
+				pointer-events: none;
 			}
 			.hero h1 {
-				font-size: 2.75em;
-				margin-bottom: 0.4em;
-				letter-spacing: -0.02em;
+				font-size: 3.5em;
+				margin: 0 0 0.3em 0;
+				line-height: 1.05;
+				letter-spacing: -0.035em;
 			}
 			.hero .tagline {
-				font-size: 1.15em;
-				color: var(--text-muted);
-				margin-bottom: 1em;
-				line-height: 1.5;
+				font-size: 1.25em;
+				color: var(--text-strong);
+				margin-bottom: 1.5em;
+				line-height: 1.45;
+				font-weight: 500;
+				max-width: 30ch;
 			}
 			.hero .intro {
-				color: var(--text);
-			}
-			.section-label {
-				font-size: 0.85em;
-				text-transform: uppercase;
-				letter-spacing: 0.1em;
 				color: var(--text-muted);
-				margin-bottom: 1.5em;
-				font-weight: 600;
+				font-size: 1em;
+				max-width: 56ch;
 			}
-			.post-list {
+			.post-cards {
 				list-style: none;
 				padding: 0;
 				margin: 0;
+				display: flex;
+				flex-direction: column;
+				gap: 1em;
 			}
-			.post-list li {
-				margin-bottom: 2.5em;
-				padding-bottom: 2.5em;
-				border-bottom: 1px solid var(--border);
-			}
-			.post-list li:last-child {
-				border-bottom: none;
-				margin-bottom: 1em;
-			}
-			.post-list a {
+			.post-card {
 				display: block;
+				padding: 1.4em 1.6em;
+				background: var(--bg-card);
+				border: 1px solid var(--border);
+				border-radius: 14px;
 				text-decoration: none;
-				color: var(--text-strong);
+				color: var(--text);
+				transition:
+					border-color 200ms ease,
+					transform 200ms ease,
+					box-shadow 200ms ease;
 			}
-			.post-list a:hover .post-title {
+			.post-card:hover {
+				border-color: var(--accent);
+				transform: translateY(-2px);
+				box-shadow: var(--shadow-md);
+				text-decoration: none;
+			}
+			.post-card:hover .post-title {
 				color: var(--accent);
-				text-decoration: none;
-			}
-			.post-list a:hover {
-				text-decoration: none;
 			}
 			.post-meta {
-				font-size: 0.9em;
+				font-size: 0.82em;
 				color: var(--text-muted);
-				margin: 0 0 0.5em 0;
+				margin: 0 0 0.4em 0;
+				text-transform: uppercase;
+				letter-spacing: 0.08em;
+				font-weight: 600;
 			}
 			.post-title {
-				font-size: 1.45em;
-				margin: 0 0 0.5em 0;
+				font-size: 1.3em;
+				margin: 0 0 0.4em 0;
 				color: var(--text-strong);
 				transition: color 150ms ease;
+				line-height: 1.3;
 			}
 			.post-desc {
-				color: var(--text);
+				color: var(--text-muted);
 				margin: 0;
-				font-size: 0.98em;
+				font-size: 0.95em;
+				line-height: 1.55;
 			}
 			.see-all {
-				margin-top: 2em;
-				font-size: 0.95em;
+				margin-top: 2.5em;
+				display: inline-flex;
+				align-items: center;
+				gap: 0.4em;
+				font-weight: 600;
+			}
+			.see-all:hover {
+				gap: 0.6em;
+			}
+			@media (max-width: 720px) {
+				.hero h1 {
+					font-size: 2.6em;
+				}
+				.hero .tagline {
+					font-size: 1.1em;
+				}
+				.post-card {
+					padding: 1.2em 1.3em;
+				}
 			}
 		</style>
 	</head>
@@ -94,7 +132,7 @@ const posts = (await getCollection('blog'))
 		<Header />
 		<main>
 			<section class="hero">
-				<h1>{SITE_TITLE}</h1>
+				<h1 class="gradient-text">{SITE_TITLE}</h1>
 				<p class="tagline">{SITE_DESCRIPTION}</p>
 				<p class="intro">
 					A working notebook for thinking better about AI — alignment, governance,
@@ -105,11 +143,11 @@ const posts = (await getCollection('blog'))
 
 			<section>
 				<p class="section-label">Recent posts</p>
-				<ul class="post-list">
+				<ul class="post-cards">
 					{
 						posts.map((post) => (
 							<li>
-								<a href={`/blog/${post.id}/`}>
+								<a href={`/blog/${post.id}/`} class="post-card">
 									<p class="post-meta">
 										<FormattedDate date={post.data.pubDate} />
 									</p>
@@ -120,7 +158,7 @@ const posts = (await getCollection('blog'))
 						))
 					}
 				</ul>
-				<p class="see-all"><a href="/blog">All posts &rarr;</a></p>
+				<a href="/blog" class="see-all">All posts <span aria-hidden="true">→</span></a>
 			</section>
 		</main>
 		<Footer />

@@ -41,68 +41,91 @@ const { tag, posts } = Astro.props;
 		<style>
 			.back {
 				color: var(--text-muted);
-				font-size: 0.95em;
-				margin-bottom: 1em;
+				font-size: 0.92em;
+				margin-bottom: 1.5em;
 			}
 			.back a {
 				color: var(--text-muted);
 				text-decoration: none;
 			}
 			.back a:hover {
-				color: var(--text-strong);
+				color: var(--accent);
 			}
-			.page-title {
-				margin-bottom: 2em;
+			.page-header {
+				margin-bottom: 2.5em;
 			}
-			.post-list {
+			.page-header h1 {
+				font-size: 2.5em;
+				margin: 0;
+			}
+			.tag-prefix {
+				color: var(--accent);
+			}
+			.post-cards {
 				list-style: none;
 				padding: 0;
 				margin: 0;
+				display: flex;
+				flex-direction: column;
+				gap: 1em;
 			}
-			.post-list li {
-				margin-bottom: 2em;
-				padding-bottom: 2em;
-				border-bottom: 1px solid var(--border);
-			}
-			.post-list li:last-child {
-				border-bottom: none;
-			}
-			.post-list a {
+			.post-card {
 				display: block;
+				padding: 1.4em 1.6em;
+				background: var(--bg-card);
+				border: 1px solid var(--border);
+				border-radius: 14px;
 				text-decoration: none;
-				color: var(--text-strong);
+				color: var(--text);
+				transition:
+					border-color 200ms ease,
+					transform 200ms ease,
+					box-shadow 200ms ease;
 			}
-			.post-list a:hover .post-title {
+			.post-card:hover {
+				border-color: var(--accent);
+				transform: translateY(-2px);
+				box-shadow: var(--shadow-md);
+				text-decoration: none;
+			}
+			.post-card:hover .post-title {
 				color: var(--accent);
 			}
 			.post-meta {
-				font-size: 0.9em;
+				font-size: 0.82em;
 				color: var(--text-muted);
 				margin: 0 0 0.4em 0;
+				text-transform: uppercase;
+				letter-spacing: 0.08em;
+				font-weight: 600;
 			}
 			.post-title {
-				font-size: 1.35em;
+				font-size: 1.25em;
 				margin: 0 0 0.4em 0;
 				color: var(--text-strong);
 				transition: color 150ms ease;
+				line-height: 1.3;
 			}
 			.post-desc {
-				color: var(--text);
+				color: var(--text-muted);
 				margin: 0;
 				font-size: 0.95em;
+				line-height: 1.55;
 			}
 		</style>
 	</head>
 	<body>
 		<Header />
 		<main>
-			<p class="back"><a href="/tags">&larr; All tags</a></p>
-			<h1 class="page-title">#{tag}</h1>
-			<ul class="post-list">
+			<p class="back"><a href="/tags">← All tags</a></p>
+			<header class="page-header">
+				<h1><span class="tag-prefix">#</span>{tag}</h1>
+			</header>
+			<ul class="post-cards">
 				{
 					posts.map((post) => (
 						<li>
-							<a href={`/blog/${post.id}/`}>
+							<a href={`/blog/${post.id}/`} class="post-card">
 								<p class="post-meta">
 									<FormattedDate date={post.data.pubDate} />
 								</p>

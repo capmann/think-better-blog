@@ -1,52 +1,72 @@
 /*
-  Site styles. Editorial, restrained, generous typography.
-  Originally based on Bear Blog's default — heavily reworked.
+  Site styles. Editorial typography with a vibrant indigo/lavender brand mark.
+  Dark mode draws from LifeGraph's deep-navy palette.
 */
 
 :root {
 	color-scheme: light;
 
 	--bg: #ffffff;
-	--bg-subtle: #fafafa;
-	--text: #1a1a1f;
-	--text-strong: #0a0a0d;
-	--text-muted: #6b6e75;
-	--accent: #2337ff;
-	--accent-hover: #4452ff;
-	--border: #e5e7eb;
-	--code-bg: #f4f4f5;
-	--shadow:
-		0 1px 3px rgba(0, 0, 0, 0.04), 0 4px 12px rgba(0, 0, 0, 0.04);
+	--bg-subtle: #fafafb;
+	--bg-card: #ffffff;
+	--text: #1a1a2e;
+	--text-strong: #0a0a1f;
+	--text-muted: #6b6b80;
+	--text-faint: #9999ad;
+	--accent: #6366f1;
+	--accent-strong: #4f46e5;
+	--accent-soft: #a78bfa;
+	--accent-glow: rgba(99, 102, 241, 0.12);
+	--accent-gradient: linear-gradient(135deg, #a78bfa, #6366f1);
+	--border: #e4e4ec;
+	--border-strong: #cdcdda;
+	--code-bg: #f4f4f8;
 
-	/* Legacy vars used by per-component <style> blocks; redefined per theme */
-	--accent-dark: var(--accent-hover);
-	--black: 10, 10, 13;
-	--gray: 107, 110, 117;
-	--gray-light: 229, 231, 235;
-	--gray-dark: 26, 26, 31;
+	--shadow-sm:
+		0 1px 2px rgba(15, 15, 30, 0.04), 0 2px 4px rgba(15, 15, 30, 0.04);
+	--shadow-md:
+		0 1px 3px rgba(15, 15, 30, 0.06), 0 8px 24px rgba(15, 15, 30, 0.06);
+
+	/* Legacy vars used by per-component <style> blocks */
+	--accent-dark: var(--accent-strong);
+	--accent-hover: var(--accent-strong);
+	--black: 10, 10, 31;
+	--gray: 107, 107, 128;
+	--gray-light: 228, 228, 236;
+	--gray-dark: 26, 26, 46;
 	--gray-gradient: transparent, transparent;
-	--box-shadow: var(--shadow);
+	--box-shadow: var(--shadow-md);
 }
 
 :root[data-theme='dark'] {
 	color-scheme: dark;
 
-	--bg: #0d0e12;
-	--bg-subtle: #14161c;
-	--text: #d4d4d8;
-	--text-strong: #f4f4f5;
-	--text-muted: #8b8b93;
-	--accent: #7d92ff;
-	--accent-hover: #a3b3ff;
-	--border: #1f2027;
-	--code-bg: #1a1b20;
-	--shadow:
-		0 1px 3px rgba(0, 0, 0, 0.5), 0 4px 12px rgba(0, 0, 0, 0.4);
+	--bg: #0a0a0f;
+	--bg-subtle: #111119;
+	--bg-card: #14142a;
+	--text: #d4d4e0;
+	--text-strong: #ffffff;
+	--text-muted: #8b8b9d;
+	--text-faint: #5a5a6e;
+	--accent: #a78bfa;
+	--accent-strong: #c4b5fd;
+	--accent-soft: #6366f1;
+	--accent-glow: rgba(167, 139, 250, 0.16);
+	--accent-gradient: linear-gradient(135deg, #a78bfa, #6366f1);
+	--border: #1e1e2e;
+	--border-strong: #2a2a3a;
+	--code-bg: #16162a;
 
+	--shadow-sm:
+		0 1px 3px rgba(0, 0, 0, 0.4), 0 2px 6px rgba(0, 0, 0, 0.4);
+	--shadow-md:
+		0 1px 3px rgba(0, 0, 0, 0.5), 0 12px 28px rgba(0, 0, 0, 0.45);
+
+	--accent-hover: var(--accent-strong);
 	--black: 244, 244, 245;
-	--gray: 139, 139, 147;
-	--gray-light: 31, 32, 39;
-	--gray-dark: 212, 212, 216;
+	--gray: 139, 139, 157;
+	--gray-light: 30, 30, 46;
+	--gray-dark: 212, 212, 224;
 }
 
 *,
@@ -76,7 +96,7 @@ body {
 }
 
 main {
-	width: 700px;
+	width: 720px;
 	max-width: calc(100% - 2em);
 	margin: 0 auto;
 	padding: 3em 1em 5em;
@@ -91,12 +111,13 @@ h6 {
 	margin: 0 0 0.5em 0;
 	color: var(--text-strong);
 	line-height: 1.2;
-	letter-spacing: -0.015em;
+	letter-spacing: -0.02em;
 	font-weight: 700;
 }
 
 h1 {
 	font-size: 2.5em;
+	letter-spacing: -0.025em;
 }
 
 h2 {
@@ -132,9 +153,10 @@ a {
 }
 
 a:hover {
-	color: var(--accent-hover);
+	color: var(--accent-strong);
 	text-decoration: underline;
 	text-underline-offset: 0.2em;
+	text-decoration-thickness: 1px;
 }
 
 strong,
@@ -155,7 +177,7 @@ li {
 img {
 	max-width: 100%;
 	height: auto;
-	border-radius: 8px;
+	border-radius: 12px;
 }
 
 code {
@@ -169,7 +191,7 @@ code {
 
 pre {
 	padding: 1.25em;
-	border-radius: 8px;
+	border-radius: 12px;
 	overflow-x: auto;
 	background: var(--code-bg);
 	border: 1px solid var(--border);
@@ -220,8 +242,27 @@ th {
 }
 
 ::selection {
-	background: var(--accent);
-	color: #ffffff;
+	background: var(--accent-glow);
+	color: var(--text-strong);
+}
+
+/* Brand mark — gradient text effect */
+.gradient-text {
+	background: var(--accent-gradient);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	background-clip: text;
+	color: transparent;
+}
+
+/* Section label — small uppercase tracked-out heading */
+.section-label {
+	font-size: 0.75em;
+	text-transform: uppercase;
+	letter-spacing: 0.12em;
+	color: var(--text-muted);
+	font-weight: 700;
+	margin: 0 0 1.5em 0;
 }
 
 @media (max-width: 720px) {

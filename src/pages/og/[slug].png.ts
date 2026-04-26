@@ -50,7 +50,7 @@ export const GET: APIRoute<Props> = async ({ props }) => {
 						props: {
 							style: {
 								fontSize: 32,
-								color: '#2337ff',
+								color: '#6366f1',
 								fontWeight: 700,
 								letterSpacing: '-0.02em',
 							},

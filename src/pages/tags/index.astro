@@ -22,8 +22,16 @@ const tags = [...tagCounts.entries()].sort((a, b) => a[0].localeCompare(b[0]));
 	<head>
 		<BaseHead title={`Tags · ${SITE_TITLE}`} description="Browse posts by tag." />
 		<style>
-			.page-title {
-				margin-bottom: 2em;
+			.page-header {
+				margin-bottom: 2.5em;
+			}
+			.page-header h1 {
+				font-size: 2.5em;
+				margin: 0 0 0.2em 0;
+			}
+			.page-header .subtitle {
+				color: var(--text-muted);
+				margin: 0;
 			}
 			.tag-list {
 				list-style: none;
@@ -36,31 +44,41 @@ const tags = [...tagCounts.entries()].sort((a, b) => a[0].localeCompare(b[0]));
 			.tag-list a {
 				display: inline-flex;
 				align-items: baseline;
-				gap: 0.4em;
-				padding: 0.4em 0.9em;
-				background: var(--bg-subtle);
+				gap: 0.5em;
+				padding: 0.5em 1em;
+				background: var(--bg-card);
 				border: 1px solid var(--border);
 				border-radius: 999px;
 				text-decoration: none;
 				color: var(--text);
 				font-size: 0.95em;
-				transition: color 150ms ease, border-color 150ms ease;
+				transition:
+					color 150ms ease,
+					border-color 150ms ease,
+					background 150ms ease,
+					transform 150ms ease;
 			}
 			.tag-list a:hover {
 				color: var(--accent);
 				border-color: var(--accent);
+				background: var(--accent-glow);
 				text-decoration: none;
+				transform: translateY(-1px);
 			}
 			.count {
 				color: var(--text-muted);
 				font-size: 0.85em;
+				font-variant-numeric: tabular-nums;
 			}
 		</style>
 	</head>
 	<body>
 		<Header />
 		<main>
-			<h1 class="page-title">Tags</h1>
+			<header class="page-header">
+				<h1>Tags</h1>
+				<p class="subtitle">Browse posts by topic.</p>
+			</header>
 			{
 				tags.length === 0 ? (
 					<p>No tags yet.</p>
