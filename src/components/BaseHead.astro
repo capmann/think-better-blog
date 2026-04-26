@@ -18,6 +18,20 @@ const ogImagePath = blogMatch ? `/og/${blogMatch[1]}.png` : '/og/default.png';
 const ogImageURL = new URL(ogImagePath, Astro.site ?? Astro.url).toString();
 ---
 
+<script is:inline>
+	(function () {
+		try {
+			const stored = localStorage.getItem('theme');
+			const theme =
+				stored ||
+				(window.matchMedia('(prefers-color-scheme: dark)').matches
+					? 'dark'
+					: 'light');
+			document.documentElement.dataset.theme = theme;
+		} catch (e) {}
+	})();
+</script>
+
 <!-- Global Metadata -->
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />

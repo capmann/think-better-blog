@@ -39,44 +39,75 @@ const { tag, posts } = Astro.props;
 			description={`Posts tagged ${tag}.`}
 		/>
 		<style>
+			.back {
+				color: var(--text-muted);
+				font-size: 0.95em;
+				margin-bottom: 1em;
+			}
+			.back a {
+				color: var(--text-muted);
+				text-decoration: none;
+			}
+			.back a:hover {
+				color: var(--text-strong);
+			}
+			.page-title {
+				margin-bottom: 2em;
+			}
 			.post-list {
 				list-style: none;
 				padding: 0;
+				margin: 0;
 			}
 			.post-list li {
-				margin-bottom: 1.5em;
+				margin-bottom: 2em;
+				padding-bottom: 2em;
+				border-bottom: 1px solid var(--border);
+			}
+			.post-list li:last-child {
+				border-bottom: none;
 			}
 			.post-list a {
+				display: block;
 				text-decoration: none;
-				color: rgb(var(--black));
+				color: var(--text-strong);
 			}
 			.post-list a:hover .post-title {
-				color: rgb(var(--accent));
+				color: var(--accent);
+			}
+			.post-meta {
+				font-size: 0.9em;
+				color: var(--text-muted);
+				margin: 0 0 0.4em 0;
 			}
 			.post-title {
-				margin: 0 0 0.25em 0;
-				font-size: 1.25em;
+				font-size: 1.35em;
+				margin: 0 0 0.4em 0;
+				color: var(--text-strong);
+				transition: color 150ms ease;
 			}
-			.post-date {
-				color: rgb(var(--gray));
-				font-size: 0.9em;
+			.post-desc {
+				color: var(--text);
+				margin: 0;
+				font-size: 0.95em;
 			}
 		</style>
 	</head>
 	<body>
 		<Header />
 		<main>
-			<p><a href="/tags">&larr; All tags</a></p>
-			<h1>#{tag}</h1>
+			<p class="back"><a href="/tags">&larr; All tags</a></p>
+			<h1 class="page-title">#{tag}</h1>
 			<ul class="post-list">
 				{
 					posts.map((post) => (
 						<li>
 							<a href={`/blog/${post.id}/`}>
-								<h3 class="post-title">{post.data.title}</h3>
-								<p class="post-date">
+								<p class="post-meta">
 									<FormattedDate date={post.data.pubDate} />
 								</p>
+								<h2 class="post-title">{post.data.title}</h2>
+								<p class="post-desc">{post.data.description}</p>
 							</a>
 						</li>
 					))

@@ -5,44 +5,152 @@ import HeaderLink from './HeaderLink.astro';
 
 <header>
 	<nav>
-		<h2><a href="/">{SITE_TITLE}</a></h2>
-		<div class="internal-links">
+		<a class="site-title" href="/">{SITE_TITLE}</a>
+		<div class="links">
 			<HeaderLink href="/">Home</HeaderLink>
 			<HeaderLink href="/blog">Blog</HeaderLink>
 			<HeaderLink href="/tags">Tags</HeaderLink>
+			<HeaderLink href="/search">Search</HeaderLink>
 			<HeaderLink href="/about">About</HeaderLink>
+			<button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme" type="button">
+				<svg
+					class="icon-sun"
+					aria-hidden="true"
+					width="18"
+					height="18"
+					viewBox="0 0 24 24"
+					fill="none"
+					stroke="currentColor"
+					stroke-width="2"
+					stroke-linecap="round"
+					stroke-linejoin="round"
+				>
+					<circle cx="12" cy="12" r="4"></circle>
+					<path d="M12 2v2"></path>
+					<path d="M12 20v2"></path>
+					<path d="m4.93 4.93 1.41 1.41"></path>
+					<path d="m17.66 17.66 1.41 1.41"></path>
+					<path d="M2 12h2"></path>
+					<path d="M20 12h2"></path>
+					<path d="m6.34 17.66-1.41 1.41"></path>
+					<path d="m19.07 4.93-1.41 1.41"></path>
+				</svg>
+				<svg
+					class="icon-moon"
+					aria-hidden="true"
+					width="18"
+					height="18"
+					viewBox="0 0 24 24"
+					fill="none"
+					stroke="currentColor"
+					stroke-width="2"
+					stroke-linecap="round"
+					stroke-linejoin="round"
+				>
+					<path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>
+				</svg>
+			</button>
 		</div>
 	</nav>
 </header>
+<script>
+	const button = document.getElementById('theme-toggle');
+	button?.addEventListener('click', () => {
+		const cur = document.documentElement.dataset.theme;
+		const next = cur === 'dark' ? 'light' : 'dark';
+		document.documentElement.dataset.theme = next;
+		try {
+			localStorage.setItem('theme', next);
+		} catch (e) {}
+	});
+</script>
 <style>
 	header {
-		margin: 0;
-		padding: 0 1em;
-		background: white;
-		box-shadow: 0 2px 8px rgba(var(--black), 5%);
-	}
-	h2 {
-		margin: 0;
-		font-size: 1em;
-	}
-
-	h2 a,
-	h2 a.active {
-		text-decoration: none;
+		background: var(--bg);
+		border-bottom: 1px solid var(--border);
 	}
 	nav {
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
+		max-width: 1080px;
+		margin: 0 auto;
+		padding: 1em 1.5em;
+		gap: 1em;
 	}
-	nav a {
-		padding: 1em 0.5em;
-		color: var(--black);
-		border-bottom: 4px solid transparent;
+	.site-title {
+		font-weight: 700;
+		font-size: 1.05em;
+		color: var(--text-strong);
+		text-decoration: none;
+		letter-spacing: -0.01em;
+	}
+	.site-title:hover {
+		color: var(--accent);
 		text-decoration: none;
 	}
-	nav a.active {
+	.links {
+		display: flex;
+		align-items: center;
+		gap: 0.25em;
+	}
+	.links :global(a) {
+		padding: 0.5em 0.8em;
+		color: var(--text-muted);
 		text-decoration: none;
-		border-bottom-color: var(--accent);
+		font-size: 0.95em;
+		border-radius: 6px;
+		transition: color 150ms ease, background 150ms ease;
+	}
+	.links :global(a:hover) {
+		color: var(--text-strong);
+		background: var(--bg-subtle);
+		text-decoration: none;
+	}
+	.links :global(a.active) {
+		color: var(--text-strong);
+		font-weight: 600;
+		text-decoration: none;
+	}
+	.theme-toggle {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		width: 36px;
+		height: 36px;
+		margin-left: 0.5em;
+		padding: 0;
+		background: transparent;
+		border: 1px solid var(--border);
+		border-radius: 6px;
+		color: var(--text-muted);
+		cursor: pointer;
+		transition: color 150ms ease, background 150ms ease;
+	}
+	.theme-toggle:hover {
+		color: var(--text-strong);
+		background: var(--bg-subtle);
+	}
+	.theme-toggle .icon-sun {
+		display: none;
+	}
+	.theme-toggle .icon-moon {
+		display: block;
+	}
+	:root[data-theme='dark'] .theme-toggle .icon-sun {
+		display: block;
+	}
+	:root[data-theme='dark'] .theme-toggle .icon-moon {
+		display: none;
+	}
+	@media (max-width: 720px) {
+		nav {
+			padding: 0.75em 1em;
+			gap: 0.5em;
+		}
+		.links :global(a) {
+			padding: 0.5em 0.5em;
+			font-size: 0.9em;
+		}
 	}
 </style>

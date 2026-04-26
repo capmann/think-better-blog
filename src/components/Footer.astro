@@ -4,20 +4,30 @@ const today = new Date();
 ---
 
 <footer>
-	&copy; {today.getFullYear()} {SITE_AUTHOR}.
-	<a href="/rss.xml">RSS</a>
+	<div class="inner">
+		<span>&copy; {today.getFullYear()} {SITE_AUTHOR}</span>
+		<a href="/rss.xml">RSS</a>
+	</div>
 </footer>
 <style>
 	footer {
-		padding: 2em 1em 6em 1em;
-		background: linear-gradient(var(--gray-gradient)) no-repeat;
-		color: rgb(var(--gray));
-		text-align: center;
+		border-top: 1px solid var(--border);
+		color: var(--text-muted);
+		font-size: 0.9em;
 	}
-	footer a {
-		color: rgb(var(--gray));
+	.inner {
+		max-width: 1080px;
+		margin: 0 auto;
+		padding: 1.5em;
+		display: flex;
+		justify-content: space-between;
+		gap: 1em;
 	}
-	footer a:hover {
-		color: rgb(var(--gray-dark));
+	a {
+		color: var(--text-muted);
+		text-decoration: none;
+	}
+	a:hover {
+		color: var(--text-strong);
 	}
 </style>

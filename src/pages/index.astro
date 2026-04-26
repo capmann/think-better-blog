@@ -7,6 +7,7 @@ import Header from '../components/Header.astro';
 import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 
 const posts = (await getCollection('blog'))
+	.filter((post) => !post.data.draft)
 	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
 	.slice(0, 5);
 ---
@@ -16,73 +17,110 @@ const posts = (await getCollection('blog'))
 	<head>
 		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
 		<style>
-			.intro {
-				margin-bottom: 3em;
+			.hero {
+				margin-bottom: 4em;
 			}
-			.intro p {
-				font-size: 1.1em;
-				line-height: 1.6;
+			.hero h1 {
+				font-size: 2.75em;
+				margin-bottom: 0.4em;
+				letter-spacing: -0.02em;
 			}
-			.recent {
-				margin-top: 2em;
-			}
-			.recent h2 {
+			.hero .tagline {
+				font-size: 1.15em;
+				color: var(--text-muted);
 				margin-bottom: 1em;
+				line-height: 1.5;
+			}
+			.hero .intro {
+				color: var(--text);
+			}
+			.section-label {
+				font-size: 0.85em;
+				text-transform: uppercase;
+				letter-spacing: 0.1em;
+				color: var(--text-muted);
+				margin-bottom: 1.5em;
+				font-weight: 600;
 			}
 			.post-list {
 				list-style: none;
 				padding: 0;
+				margin: 0;
 			}
 			.post-list li {
-				margin-bottom: 1.5em;
+				margin-bottom: 2.5em;
+				padding-bottom: 2.5em;
+				border-bottom: 1px solid var(--border);
+			}
+			.post-list li:last-child {
+				border-bottom: none;
+				margin-bottom: 1em;
 			}
 			.post-list a {
+				display: block;
 				text-decoration: none;
-				color: rgb(var(--black));
+				color: var(--text-strong);
 			}
 			.post-list a:hover .post-title {
-				color: rgb(var(--accent));
+				color: var(--accent);
+				text-decoration: none;
+			}
+			.post-list a:hover {
+				text-decoration: none;
+			}
+			.post-meta {
+				font-size: 0.9em;
+				color: var(--text-muted);
+				margin: 0 0 0.5em 0;
 			}
 			.post-title {
-				margin: 0 0 0.25em 0;
-				font-size: 1.25em;
+				font-size: 1.45em;
+				margin: 0 0 0.5em 0;
+				color: var(--text-strong);
+				transition: color 150ms ease;
 			}
-			.post-date {
-				color: rgb(var(--gray));
-				font-size: 0.9em;
+			.post-desc {
+				color: var(--text);
+				margin: 0;
+				font-size: 0.98em;
+			}
+			.see-all {
+				margin-top: 2em;
+				font-size: 0.95em;
 			}
 		</style>
 	</head>
 	<body>
 		<Header />
 		<main>
-			<section class="intro">
+			<section class="hero">
 				<h1>{SITE_TITLE}</h1>
-				<p>{SITE_DESCRIPTION}</p>
-				<p>
-					This is a working notebook on alignment, governance, and the social impact of AI
-					systems — written for anyone who wants to think carefully about where this
-					technology is taking us.
+				<p class="tagline">{SITE_DESCRIPTION}</p>
+				<p class="intro">
+					A working notebook on alignment, governance, and the social impact of
+					AI systems — written for anyone who wants to think carefully about
+					where this technology is taking us.
 				</p>
 			</section>
 
-			<section class="recent">
-				<h2>Recent posts</h2>
+			<section>
+				<p class="section-label">Recent posts</p>
 				<ul class="post-list">
 					{
 						posts.map((post) => (
 							<li>
 								<a href={`/blog/${post.id}/`}>
-									<h3 class="post-title">{post.data.title}</h3>
-									<p class="post-date">
+									<p class="post-meta">
 										<FormattedDate date={post.data.pubDate} />
 									</p>
+									<h2 class="post-title">{post.data.title}</h2>
+									<p class="post-desc">{post.data.description}</p>
 								</a>
 							</li>
 						))
 					}
 				</ul>
-				<p><a href="/blog">All posts &rarr;</a></p>
+				<p class="see-all"><a href="/blog">All posts &rarr;</a></p>
 			</section>
 		</main>
 		<Footer />

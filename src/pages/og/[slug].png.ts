@@ -15,7 +15,7 @@ interface Props {
 }
 
 export async function getStaticPaths() {
-	const posts = await getCollection('blog');
+	const posts = (await getCollection('blog')).filter((p) => !p.data.draft);
 	return [
 		{ params: { slug: 'default' }, props: { title: SITE_TITLE } },
 		...posts.map((post) => ({
