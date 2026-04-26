@@ -5,13 +5,12 @@ pubDate: 2026-04-26
 tags: ['meta']
 ---
 
-Hello, and welcome.
+Welcome to my blog!
 
-This is a working notebook for thinking better about AI — alignment, governance, the
+This is a working notebook for thinking better about AI and technology: alignment, governance, sovereignty, ethics, the
 labor and distributional effects of these systems, and the ways the public conversation
 about risk does and doesn't track reality.
 
-I'm not trying to be a news site. I'm trying to write the kind of posts I wish I could
-read: careful, opinionated, willing to be wrong in public.
+I'm trying to write the kind of posts I wish I could read: careful, opinionated, willing to be wrong in public.
 
 More soon.
