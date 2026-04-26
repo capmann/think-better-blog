@@ -6,7 +6,7 @@ import { defineConfig, fontProviders } from 'astro/config';
 
 // https://astro.build/config
 export default defineConfig({
-	site: 'https://think-better-blog.vercel.app',
+	site: 'https://thinkbetterabout.ai',
 	integrations: [mdx(), sitemap()],
 	fonts: [
 		{
