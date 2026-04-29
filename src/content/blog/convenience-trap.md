@@ -35,7 +35,7 @@ But that was also the moment where **something started to feel wrong** to me.
 
 Researchers and ethicists ([Hipgrave et al., *Frontiers in Digital Health*, 2025](https://www.frontiersin.org/journals/digital-health/articles/10.3389/fdgth.2025.1606291/full)) have been warning about exactly this tension: mental-health chatbots can be helpful in some settings, but they also raise concerns around **over-reliance, lack of accountability, manipulation, and inappropriate use by vulnerable people**.
 
-The same discomfort came back when I started seeing stories of people falling in love with AI companions.
+The same discomfort came back when I started seeing [stories of people falling in love with AI companions](https://arxiv.org/abs/2412.14190).
 
 At first glance, it is easy to dismiss this as marginal or absurd. But if you think about it for more than five seconds, **it is not absurd at all**. Of course some people will prefer an entity that is always present, always attentive, always adaptive, and designed to make interaction frictionless.
 
@@ -67,7 +67,7 @@ Are we ok with handing over more and more of our judgment to AI because it is co
 
 I am not only talking about small tasks, but **interpretation, emotional processing, choice, and eventually responsibility**.
 
-The danger may not be a dramatic moment in which humans are suddenly replaced. It may be something slower and more ordinary: what [Kulveit et al. (2025)](https://arxiv.org/abs/2412.14190) call a [***gradual disempowerment***](https://gradual-disempowerment.ai/), in which we *stop exercising capacities that used to be part of living and thinking well* because the machine can do them faster, more smoothly, and with less friction.
+The danger may not be a dramatic moment in which humans are suddenly replaced. It may be something slower and more ordinary: a [***gradual disempowerment***](https://gradual-disempowerment.ai/), in which we *stop exercising capacities that used to be part of living and thinking well* because the machine can do them faster, more smoothly, and with less friction.
 
 That is why I think we need philosophers, social scientists, and people willing to step back from the product cycle.
 
