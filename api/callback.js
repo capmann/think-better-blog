@@ -31,8 +31,9 @@ function escapeJsForScript(value) {
 
 function renderResponseHtml({ status, payload }) {
 	// Decap/Sveltia handshake:
-	// 1. Wait for the opener to send "authorizing:github".
-	// 2. Reply with "authorization:github:<status>:<json>".
+	// 1. Popup posts "authorizing:github" to opener.
+	// 2. Opener echoes "authorizing:github" back as an ack.
+	// 3. Popup posts "authorization:github:<status>:<json>" with the result.
 	const message = `authorization:github:${status}:${JSON.stringify(payload)}`;
 	return `<!doctype html>
 <html lang="en">
@@ -41,17 +42,21 @@ function renderResponseHtml({ status, payload }) {
 <p>Authorizing… you can close this window.</p>
 <script>
 (function () {
-	var message = ${escapeJsForScript(message)};
+	var result = ${escapeJsForScript(message)};
+	var provider = 'github';
+	if (!window.opener) {
+		document.body.innerText = 'Authorization complete, but no opener window was found. You can close this tab.';
+		return;
+	}
 	function receive(event) {
-		if (!event.data || typeof event.data !== 'string') return;
-		if (event.data.indexOf('authorizing:github') !== 0) return;
-		event.source.postMessage(message, event.origin);
+		if (typeof event.data !== 'string') return;
+		if (event.data !== 'authorizing:' + provider) return;
+		window.opener.postMessage(result, event.origin);
 		window.removeEventListener('message', receive, false);
+		setTimeout(function () { window.close(); }, 500);
 	}
 	window.addEventListener('message', receive, false);
-	if (window.opener) {
-		window.opener.postMessage('sveltia-cms-auth:ready', '*');
-	}
+	window.opener.postMessage('authorizing:' + provider, '*');
 })();
 </script>
 </body>
