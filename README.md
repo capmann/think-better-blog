@@ -1,63 +1,60 @@
-# Astro Starter Kit: Blog
+# Think Better About — blog
 
-```sh
-npm create astro@latest -- --template blog
-```
+Personal blog at [thinkbetterabout.ai](https://thinkbetterabout.ai). Built with Astro, deployed on Vercel.
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## Commands
 
-Features:
+| Command           | Action                                       |
+| :---------------- | :------------------------------------------- |
+| `npm install`     | Install dependencies                         |
+| `npm run dev`     | Local dev server at `localhost:4321`         |
+| `npm run build`   | Build production site to `./dist/`           |
+| `npm run preview` | Preview the production build locally         |
 
-- ✅ Minimal styling (make it your own!)
-- ✅ 100/100 Lighthouse performance
-- ✅ SEO-friendly with canonical URLs and Open Graph data
-- ✅ Sitemap support
-- ✅ RSS Feed support
-- ✅ Markdown & MDX support
+## Writing posts
 
-## 🚀 Project Structure
+Two ways to write:
 
-Inside of your Astro project, you'll see the following folders and files:
+1. **In the browser via `/admin`** (no code, recommended). Sveltia CMS UI at [thinkbetterabout.ai/admin](https://thinkbetterabout.ai/admin). Sign in with GitHub. Create posts, save as draft, publish.
+2. **Locally via markdown files**, in `src/content/blog/*.md`. Frontmatter schema in `src/content.config.ts`.
 
-```text
-├── public/
-├── src/
-│   ├── assets/
-│   ├── components/
-│   ├── content/
-│   ├── layouts/
-│   └── pages/
-├── astro.config.mjs
-├── README.md
-├── package.json
-└── tsconfig.json
-```
+Drafts (`draft: true` in frontmatter) are hidden everywhere on the live site: home, `/blog`, tag pages, RSS, sitemap.
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+## One-time setup for `/admin`
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+The admin uses GitHub OAuth so only the repo owner can sign in. To wire it up:
 
-The `src/content/` directory contains "collections" of related Markdown and MDX documents. Use `getCollection()` to retrieve posts from `src/content/blog/`, and type-check your frontmatter using an optional schema. See [Astro's Content Collections docs](https://docs.astro.build/en/guides/content-collections/) to learn more.
+### 1. Create a GitHub OAuth App
 
-Any static assets, like images, can be placed in the `public/` directory.
+Go to [github.com/settings/developers](https://github.com/settings/developers) → **OAuth Apps** → **New OAuth App**.
 
-## 🧞 Commands
+- **Application name**: `Think Better About CMS`
+- **Homepage URL**: `https://thinkbetterabout.ai`
+- **Authorization callback URL**: `https://thinkbetterabout.ai/api/callback`
 
-All commands are run from the root of the project, from a terminal:
+After creating, click **Generate a new client secret**. Copy the client ID and the secret.
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+### 2. Add env vars on Vercel
 
-## 👀 Want to learn more?
+In the Vercel project → **Settings** → **Environment Variables**, add three vars to **Production** (and Preview if you want to use the admin from preview deployments):
 
-Check out [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+| Name                    | Value                                                    |
+| :---------------------- | :------------------------------------------------------- |
+| `GITHUB_CLIENT_ID`      | from the OAuth App                                       |
+| `GITHUB_CLIENT_SECRET`  | from the OAuth App                                       |
+| `OAUTH_STATE_SECRET`    | any long random string (e.g. `openssl rand -hex 32`)     |
+| `GITHUB_ALLOWED_USERS`  | `capmann` (comma-separated GitHub usernames allowed in)  |
 
-## Credit
+Then redeploy so the new env vars are picked up.
 
-This theme is based off of the lovely [Bear Blog](https://github.com/HermanMartinus/bearblog/).
+### 3. Sign in
+
+Visit `/admin`, click **Sign in with GitHub**, approve the OAuth app. You should land in the editor.
+
+## Stack notes
+
+- Astro v6 with MDX, sitemap, RSS
+- Vercel auto-deploys on push to `main`
+- `/api/auth.js` and `/api/callback.js` are Vercel Node functions handling the OAuth flow
+- `public/admin/` mounts Sveltia CMS (loaded from the unpkg CDN)
+- Theme based on [Bear Blog](https://github.com/HermanMartinus/bearblog/)

@@ -1,0 +1,51 @@
+backend:
+  name: github
+  repo: capmann/think-better-blog
+  branch: main
+  base_url: https://thinkbetterabout.ai
+  auth_endpoint: api/auth
+  commit_messages:
+    create: 'Create post "{{slug}}"'
+    update: 'Update post "{{slug}}"'
+    delete: 'Delete post "{{slug}}"'
+    uploadMedia: 'Upload "{{path}}"'
+    deleteMedia: 'Delete "{{path}}"'
+
+site_url: https://thinkbetterabout.ai
+display_url: https://thinkbetterabout.ai
+logo_url: /favicon.svg
+
+media_folder: public/uploads
+public_folder: /uploads
+
+collections:
+  - name: blog
+    label: Blog posts
+    label_singular: Post
+    folder: src/content/blog
+    create: true
+    extension: md
+    format: yaml-frontmatter
+    slug: '{{slug}}'
+    summary: '{{title}} — {{#if draft}}DRAFT{{else}}{{pubDate | date(''yyyy-MM-dd'')}}{{/if}}'
+    sortable_fields: ['pubDate', 'title']
+    view_filters:
+      - label: Drafts only
+        field: draft
+        pattern: true
+      - label: Published only
+        field: draft
+        pattern: false
+    fields:
+      - { name: title, label: Title, widget: string }
+      - { name: description, label: Description, widget: text }
+      - { name: pubDate, label: Publish date, widget: datetime, date_format: 'yyyy-MM-dd', time_format: false, picker_utc: true }
+      - { name: updatedDate, label: Updated date, widget: datetime, required: false, date_format: 'yyyy-MM-dd', time_format: false, picker_utc: true }
+      - name: tags
+        label: Tags
+        widget: list
+        required: false
+        default: []
+        field: { name: tag, label: Tag, widget: string }
+      - { name: draft, label: Draft, widget: boolean, default: true, hint: 'Drafts are never shown on the live site.' }
+      - { name: body, label: Body, widget: markdown }
