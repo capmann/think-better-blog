@@ -6,7 +6,10 @@ const today = new Date();
 <footer>
 	<div class="inner">
 		<span>&copy; {today.getFullYear()} {SITE_AUTHOR}</span>
-		<a href="/rss.xml">RSS</a>
+		<div class="links">
+			<a href="mailto:hello@thinkbetterabout.ai">Contact</a>
+			<a href="/rss.xml">RSS</a>
+		</div>
 	</div>
 </footer>
 <style>
@@ -22,6 +25,11 @@ const today = new Date();
 		display: flex;
 		justify-content: space-between;
 		gap: 1em;
+		flex-wrap: wrap;
+	}
+	.links {
+		display: flex;
+		gap: 1.25em;
 	}
 	a {
 		color: var(--text-muted);
