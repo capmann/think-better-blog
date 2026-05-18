@@ -27,7 +27,7 @@ collections:
     extension: md
     format: yaml-frontmatter
     slug: '{{slug}}'
-    summary: '{{title}} — {{#if draft}}DRAFT{{else}}{{pubDate | date(''yyyy-MM-dd'')}}{{/if}}'
+    summary: "{{title}}"
     sortable_fields: ['pubDate', 'title']
     view_filters:
       - label: Drafts only
